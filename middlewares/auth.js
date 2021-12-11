@@ -26,13 +26,8 @@ module.exports = () => (req, res, next) => {
 
 
 async function register(fullName,username, password) {
-    //console.log(username, email, password)
-    //const existUsername = await userService.getUserByUsername(username)
     const existUsername = await userService.getUserByUsername(username)
 
-    //console.log(existUsername, existEmail)
-    // if (existUsername) {
-    //     throw new Error('Username is taken')
     if (existUsername) {
         throw new Error('Username is taken')
     }
@@ -48,7 +43,7 @@ async function login(username, password) {
         throw new Error('No such username')
     }
     const hasMatch = await bcrypt.compare(password, user.hashedPassword)
-    //console.log(hasMatch)
+    
     if (!hasMatch) {
         throw new Error('Incorrect password')
     }
@@ -60,7 +55,6 @@ function generateToken(userData) {
         _id: userData._id,
         fullName: userData.fullName,
         username: userData.username
-        // bookedProducts: userData.bookedProducts,
     }, TOKEN_SECRET)
 }
 

@@ -36,12 +36,6 @@ async function deleteProduct(product){
     return Product.findOneAndDelete(product)
     
 }
-// async function voteProductUp(productId,userId){
-//     const product = await Product.findById(productId)
-//     product.voted.push(userId)
-//     product.vote ++
-//     return product.save()
-//}
 async function rentProduct(productId,userId){
     const product = await Product.findById(productId)
     product.tenants.push(userId)

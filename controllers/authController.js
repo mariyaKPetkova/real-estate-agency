@@ -72,14 +72,5 @@ router.get('/logout', (req, res) => {
     res.redirect('/')
 })
 
-router.get('/my-posts', async (req, res) => {
-    const idAuthor = req.user._id
-    const authorName = `${req.user.lname} ${req.user.fname}`
 
-    const posts = await req.storage.getAllProducts()
-    const userPosts = posts.filter(x => x.author == idAuthor)
-    userPosts.map(x => Object.assign(x, { authorName }))
-
-    res.render('user/my-posts', { userPosts })
-})
 module.exports = router

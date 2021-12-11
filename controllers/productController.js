@@ -134,19 +134,6 @@ router.get('/delete/:id', isUser(), async (req, res) => {
     }
 })
 
-// router.get('/vote-up/:id', isUser(), async (req, res) => {
-//     try {
-//         const product = await req.storage.getProductById(req.params.id)
-//         if (req.user._id == product.author._id) {
-//             throw new Error('Cannot vote')
-//         }
-
-//         await req.storage.voteProductUp(req.params.id, req.user._id)
-//         res.redirect('/products/details/' + req.params.id)
-//     } catch (err) {
-//         res.redirect('/404')
-//     }
-// })
 
 router.get('/rent/:id', isUser(), async (req, res) => {
     try {
