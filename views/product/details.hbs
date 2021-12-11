@@ -15,13 +15,13 @@
                     <p>Description: {{product.description}}</p>
 
                     <!-- if there are already tenants of the housing, separate their names with a comma and a space ", "  -->
-                    
+                   <div class="product-btn">
                     {{#if product.isAuthor}}
                     <a href="/products/edit/{{product._id}}" class="edit">Edit</a>
                     <a href="/products/delete/{{product._id}}" class="remove">Delete</a>
                     {{/if}}
 
-                    
+                    </div> 
                     {{#if product.hasTenants}}
                     <p>People rented this housing: {{product.tenants}}</p>
                     {{else}}
