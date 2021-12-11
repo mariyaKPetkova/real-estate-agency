@@ -150,4 +150,5 @@ router.get('/rent/:id', isUser(), async (req, res) => {
         res.redirect('/404')
     }
 })
+
 module.exports = router

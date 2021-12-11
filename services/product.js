@@ -43,12 +43,17 @@ async function rentProduct(productId,userId){
     return product.save()
 }
 
-
+async function search(text) {
+    const pattern = new RegExp(`^${text}$`, 'i')
+    const products = await Product.find({ type: pattern }).lean()
+    return products
+}
 module.exports = {
     createProduct,
     getAllProducts,
     getProductById,
     editProduct,
     deleteProduct,
-    rentProduct
+    rentProduct,
+    search
 }

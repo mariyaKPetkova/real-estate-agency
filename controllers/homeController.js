@@ -15,5 +15,14 @@ router.get('/catalog', async (req, res) => {
 })
 
 
+router.get('/search', async (req, res) => {
+    const search = req.query.searchedText
+    const products = await req.storage.search(search)
+    console.log(products)
+    res.render('home/search',{products})
+})
+
+
+
 
 module.exports = router
