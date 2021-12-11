@@ -41,6 +41,6 @@ const schema = new Schema({
     author: { type: Schema.Types.ObjectId, ref: 'User' },
     tenants: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
     
-})
+}, {timestamps:true})
 
 module.exports = model('Product', schema)
