@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const { isUser } = require('../middlewares/guards.js')
 const { deleteProduct } = require('../services/product.js')
+const productService = require('../services/product.js')
 
 router.get('/create', isUser(), async (req, res) => {
 
@@ -22,7 +23,7 @@ router.post('/create', isUser(), async (req, res) => {
     }
 
     try {
-        await req.storage.createProduct(productData)
+        await productService.createProduct(productData)
 
         res.redirect('/catalog')
     } catch (err) {
@@ -54,7 +55,7 @@ router.post('/create', isUser(), async (req, res) => {
 router.get('/details/:id', async (req, res) => {
     
     try {
-        const product = await req.storage.getProductById(req.params.id)
+        const product = await productService.getProductById(req.params.id)
         
         product.hasUser = Boolean(req.user)
         product.isAuthor = req.user && req.user._id == product.author._id
@@ -73,7 +74,7 @@ router.get('/details/:id', async (req, res) => {
 router.get('/edit/:id', isUser(), async (req, res) => {
     try {
 
-        const product = await req.storage.getProductById(req.params.id)
+        const product = await productService.getProductById(req.params.id)
 
         if (req.user._id != product.author._id) {
             throw new Error('Cannot edit')
@@ -86,11 +87,11 @@ router.get('/edit/:id', isUser(), async (req, res) => {
 })
 router.post('/edit/:id', isUser(), async (req, res) => {
     try {
-        const product = await req.storage.getProductById(req.params.id)
+        const product = await productService.getProductById(req.params.id)
         if (req.user._id != product.author._id) {
             throw new Error('Cannot edit')
         }
-        await req.storage.editProduct(req.params.id, req.body)
+        await productService.editProduct(req.params.id, req.body)
         res.redirect('/products/details/' + req.params.id)
     } catch (err) {
         let errors
@@ -121,7 +122,7 @@ router.post('/edit/:id', isUser(), async (req, res) => {
 router.get('/delete/:id', isUser(), async (req, res) => {
     
     try {
-        const product = await req.storage.getProductById(req.params.id)
+        const product = await productService.getProductById(req.params.id)
 
         if (req.user._id != product.author._id) {
             throw new Error('Cannot delete')
@@ -137,13 +138,13 @@ router.get('/delete/:id', isUser(), async (req, res) => {
 
 router.get('/rent/:id', isUser(), async (req, res) => {
     try {
-        const product = await req.storage.getProductById(req.params.id)
+        const product = await productService.getProductById(req.params.id)
 
         if (req.user._id == product.author._id) {
             throw new Error('Cannot vote')
         }
 
-        await req.storage.rentProduct(req.params.id, req.user._id)
+        await productService.rentProduct(req.params.id, req.user._id)
         res.redirect('/products/details/' + req.params.id)
 
     } catch (err) {

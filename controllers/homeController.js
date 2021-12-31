@@ -1,7 +1,8 @@
 const router = require('express').Router()
+const productService = require('../services/product.js')
 
 router.get('/', async (req, res) => {
-    const allProducts = await req.storage.getAllProducts()
+    const allProducts = await productService.getAllProducts()
 
     const products = allProducts.sort((a, b) => b.createdAt - a.createdAt).slice(0, 3)
 
@@ -9,7 +10,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/catalog', async (req, res) => {
-    const products = await req.storage.getAllProducts()
+    const products = await productService.getAllProducts()
 
     res.render('home/home', { products })
 })
@@ -17,7 +18,7 @@ router.get('/catalog', async (req, res) => {
 
 router.get('/search', async (req, res) => {
     const search = req.query.searchedText
-    const products = await req.storage.search(search)
+    const products = await productService.search(search)
     console.log(products)
     res.render('home/search',{products})
 })
