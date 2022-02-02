@@ -52,7 +52,7 @@ router.get('/login', isGuest(), (req, res) => {
 })
 
 router.post('/login', isGuest(), async (req, res) => {
-    console.log(req.body.username)
+    //console.log(req.body.username)
     try {
         await req.auth.login(req.body.username, req.body.password)
         res.redirect('/')
